@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teamo JAJA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Contenedor de corazones flotantes */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff6b8a;
+            animation: float-up 8s ease-in infinite;
+            opacity: 0;
+            text-shadow: 0 0 10px rgba(255, 107, 138, 0.5);
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Contenido principal */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* Corazón central animado */
+        .central-heart {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .heart-main {
+            font-size: 120px;
+            color: #ff4d6d;
+            animation: pulse 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 77, 109, 0.6));
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .heart-main:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Anillos alrededor del corazón */
+        .heart-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid rgba(255, 107, 138, 0.3);
+            border-radius: 50%;
+            animation: ring-expand 3s ease-out infinite;
+        }
+
+        .heart-ring:nth-child(1) { animation-delay: 0s; }
+        .heart-ring:nth-child(2) { animation-delay: 1s; }
+        .heart-ring:nth-child(3) { animation-delay: 2s; }
+
+        @keyframes ring-expand {
+            0% {
+                width: 100px;
+                height: 100px;
+                opacity: 0.8;
+            }
+            100% {
+                width: 300px;
+                height: 300px;
+                opacity: 0;
+            }
+        }
+
+        /* Texto principal */
+        .title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 107, 138, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px rgba(255, 107, 138, 0.5);
+            }
+            to {
+                text-shadow: 0 0 40px rgba(255, 107, 138, 0.8), 0 0 60px rgba(255, 107, 138, 0.4);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .months-badge {
+            background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
+            padding: 15px 40px;
+            border-radius: 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(255, 77, 109, 0.4);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .months-badge span {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Mensaje romántico */
+        .love-message {
+            max-width: 600px;
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 138, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .love-message p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .love-message .highlight {
+            color: #ff6b8a;
+            font-weight: 600;
+        }
+
+        /* Corazones decorativos pequeños */
+        .small-hearts {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .small-heart {
+            font-size: 30px;
+            color: #ff6b8a;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .small-heart:nth-child(1) { animation-delay: 0s; }
+        .small-heart:nth-child(2) { animation-delay: 0.2s; }
+        .small-heart:nth-child(3) { animation-delay: 0.4s; }
+        .small-heart:nth-child(4) { animation-delay: 0.6s; }
+        .small-heart:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* Firma */
+        .signature {
+            margin-top: 50px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Partículas de brillo */
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Líneas decorativas */
+        .decorative-line {
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff6b8a, transparent);
+            margin: 20px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .heart-main {
+                font-size: 80px;
+            }
+            
+            .months-badge span {
+                font-size: 1.5rem;
+            }
+            
+            .love-message {
+                padding: 20px;
+                margin: 0 15px 40px;
+            }
+            
+            .love-message p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Efecto de entrada */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.2s; }
+        .fade-in:nth-child(2) { animation-delay: 0.4s; }
+        .fade-in:nth-child(3) { animation-delay: 0.6s; }
+        .fade-in:nth-child(4) { animation-delay: 0.8s; }
+        .fade-in:nth-child(5) { animation-delay: 1s; }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Estrellas de fondo */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* === SOBRE DE CARTA INTERACTIVO === */
+        .envelope-container {
+            margin: 50px 0;
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .envelope {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
+            border-radius: 10px;
+            box-shadow: 0 15px 40px rgba(255, 77, 109, 0.4);
+        }
+
+        .envelope-front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff8fa3, #ff6b8a);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 2;
+        }
+
+        .envelope-front::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-top: 90px solid #ff4d6d;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .envelope-heart {
+            font-size: 50px;
+            z-index: 3;
+            animation: pulse 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+        }
+
+        .envelope-text {
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            z-index: 3;
+        }
+
+        .envelope.opened .envelope-front {
+            animation: openEnvelope 0.5s ease forwards;
+        }
+
+        .envelope.closing .envelope-front {
+            animation: closeEnvelope 0.5s ease forwards;
+        }
+
+        @keyframes openEnvelope {
+            to {
+                transform: rotateX(180deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes closeEnvelope {
+            from {
+                transform: rotateX(180deg);
+                opacity: 0;
+            }
+            to {
+                transform: rotateX(0deg);
+                opacity: 1;
+            }
+        }
+
+        /* === MODAL FLOTANTE DEL MENSAJE === */
+        .letter-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .letter-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .letter-modal-content {
+            background: white;
+            padding: 40px 50px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 400px;
+            margin: 20px;
+            transform: scale(0.5) translateY(50px);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 20px 60px rgba(255, 107, 138, 0.4);
+            position: relative;
+        }
+
+        .letter-modal.active .letter-modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .letter-modal-text {
+            font-family: 'Quicksand', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #ff4d6d;
+            font-size: 1.8rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .letter-modal-emoji {
+            font-size: 40px;
+            margin-bottom: 25px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .letter-modal-close {
+            background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
+            border: none;
+            padding: 12px 35px;
+            border-radius: 50px;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4);
+        }
+
+        .letter-modal-close:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(255, 77, 109, 0.5);
+        }
+
+        /* Decoración del modal */
+        .letter-modal-content::before {
+            content: '💌';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 50px;
+            filter: drop-shadow(0 5px 15px rgba(255, 107, 138, 0.5));
+        }
+
+        @media (max-width: 768px) {
+            .letter-modal-content {
+                padding: 35px 30px;
+                margin: 15px;
+            }
+            
+            .letter-modal-text {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* === RAZONES POR LAS QUE TE AMO === */
+        .reasons-section {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .reasons-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #ff6b8a;
+            margin-bottom: 25px;
+        }
+
+        .reasons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            max-width: 600px;
+        }
+
+        .reason-card {
+            background: rgba(255,255,255,0.05);
+            padding: 15px 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 107, 138, 0.2);
+            color: white;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .reason-card:hover {
+            background: rgba(255, 107, 138, 0.2);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 107, 138, 0.3);
+        }
+
+        .reason-card .emoji {
+            margin-right: 8px;
+        }
+
+        /* === CONTADOR DE AMOR === */
+        .love-counter {
+            background: rgba(255,255,255,0.05);
+            padding: 25px 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 107, 138, 0.2);
+            text-align: center;
+        }
+
+        .counter-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #ff6b8a;
+            margin-bottom: 15px;
+        }
+
+        .counter-display {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .counter-item {
+            text-align: center;
+        }
+
+        .counter-number {
+            font-size: 2.5rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .counter-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* === INFINITO ANIMADO === */
+        .infinity-container {
+            margin: 40px 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .infinity-symbol {
+            font-size: 80px;
+            line-height: 1;
+            background: linear-gradient(135deg, #ff6b8a, #ff4d6d, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: colorShift 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .infinity-symbol:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        @keyframes colorShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(30deg); }
+        }
+
+        .infinity-text {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        /* Responsive adicional */
+        @media (max-width: 768px) {
+            .envelope {
+                width: 240px;
+                height: 160px;
+            }
+            
+            .envelope-front::before {
+                border-left: 120px solid transparent;
+                border-right: 120px solid transparent;
+                border-top: 80px solid #ff4d6d;
+            }
+            
+            .reasons-title {
+                font-size: 1.6rem;
+            }
+            
+            .counter-number {
+                font-size: 2rem;
+            }
+            
+            .infinity-symbol {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Estrellas de fondo -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Corazones flotantes -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <!-- Corazón central -->
+        <div class="central-heart fade-in">
+            <div class="heart-ring"></div>
+            <div class="heart-ring"></div>
+            <div class="heart-ring"></div>
+            <div class="heart-main" id="mainHeart">💖</div>
+        </div>
+
+        <!-- Título principal -->
+        <h1 class="title fade-in">Te Amoo Fernanda :3</h1>
+        
+        <div class="decorative-line fade-in"></div>
+        
+        <!-- Subtítulo -->
+        <p class="subtitle fade-in">Mi amor, mi vida, mi todo</p>
+
+        <!-- Badge de meses -->
+        <div class="months-badge fade-in">
+            <span>✨ 4 Meses Juntos ✨</span>
+        </div>
+
+        <!-- Mensaje de amor -->
+        <div class="love-message fade-in">
+            <p>
+                Amoooooooor, cada día a tu lado es un regalo que atesoro con todo mi corazón bebé. 
+                <span class="highlight"> Te amo muchisimo mi niña preciosa hermosa, mi dianita bebe uwu</span>, eres la razón de mis dias, de mis sonrisas, eres mi razón de ser,
+                eres la luz que ilumina mis días, eres el amor que llena mi vida de felicidadd.
+                <br><br>
+                Estos <span class="highlight">4 meses</span> a tu lado han sido los más hermosos de mi vida mi amorr, te amo princesa, y cada momento contigo es un sueño hecho realidad. 
+                Te juro que nunca quisiera despegarme de ti, eres lo mejor que me ha pasado en vdd jsjsj :3
+                Sé que juntos escribiremos muchas páginas más de nuestra historia de amor.
+                <br><br>
+                Te amooo hoy, mañana y siempre mvd te amooo. 💕
+            </p>
+        </div>
+
+        <!-- Corazones pequeños -->
+        <div class="small-hearts">
+            <span class="small-heart">💗</span>
+            <span class="small-heart">💕</span>
+            <span class="small-heart">💖</span>
+            <span class="small-heart">💕</span>
+            <span class="small-heart">💗</span>
+        </div>
+
+        <!-- SOBRE DE CARTA INTERACTIVO -->
+        <div class="envelope-container fade-in">
+            <div class="envelope" id="envelope" onclick="openEnvelope()">
+                <div class="envelope-back"></div>
+                <div class="envelope-front">
+                    <div class="envelope-heart">💌</div>
+                    <div class="envelope-text">Toca para abrir</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL FLOTANTE DEL MENSAJE -->
+        <div class="letter-modal" id="letterModal" onclick="closeLetterModal(event)">
+            <div class="letter-modal-content" onclick="event.stopPropagation()">
+                <div class="letter-modal-emoji">💕✨💖</div>
+                <p class="letter-modal-text">
+                    Te quedó bien bonito el detalle de aparecer en mi vida :3
+                    JSJJSJS dame besito
+                </p>
+                <button class="letter-modal-close" onclick="closeLetterModal()">💕 Cerrar 💕</button>
+            </div>
+        </div>
+
+        <!-- RAZONES POR LAS QUE TE AMO -->
+        <!-- <div class="reasons-section fade-in">
+            <h3 class="reasons-title">💕 Razones por las que te amo 💕</h3>
+            <div class="reasons-container">
+                <div class="reason-card" onclick="animateCard(this)"><span class="emoji">😊</span>Tu sonrisa</div>
+                <div class="reason-card" onclick="animateCard(this)"><span class="emoji">💫</span>Tu forma de ser</div>
+                <div class="reason-card" onclick="animateCard(this)"><span class="emoji">🥰</span>Tu ternura</div>
+                <div class="reason-card" onclick="animateCard(this)"><span class="emoji">✨</span>Tu luz</div>
+                <div class="reason-card" onclick="animateCard(this)"><span class="emoji">💖</span>Tu corazón</div>
+                <div class="reason-card" onclick="animateCard(this)"><span class="emoji">🌙</span>Tus ojitos</div>
+                <div class="reason-card" onclick="animateCard(this)"><span class="emoji">🦋</span>Tu risa</div>
+                <div class="reason-card" onclick="animateCard(this)"><span class="emoji">💕</span>Todo de ti</div>
+            </div>
+        </div> -->
+
+        <!-- CONTADOR DE AMOR -->
+        <div class="love-counter fade-in">
+            <div class="counter-title">💖 Tiempo amándote 💖</div>
+            <div class="counter-display">
+                <div class="counter-item">
+                    <div class="counter-number" id="days">0</div>
+                    <div class="counter-label">Días</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" id="hours">0</div>
+                    <div class="counter-label">Horas</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" id="minutes">0</div>
+                    <div class="counter-label">Minutos</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" id="seconds">0</div>
+                    <div class="counter-label">Segundos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SÍMBOLO INFINITO -->
+        <div class="infinity-container fade-in">
+            <div class="infinity-symbol" onclick="infinityClick()">∞</div>
+            <p class="infinity-text">Cuando nos casamos? 7w7</p>
+        </div>
+
+        <!-- Firma -->
+        <p class="signature fade-in">Con todo mi amor 💌</p>
+    </div>
+
+    <script>
+        // Crear corazones flotantes
+        function createFloatingHearts() {
+            const container = document.getElementById('heartsContainer');
+            const hearts = ['💕', '💗', '💖', '❤️', '💓', '💝', '💘'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                
+                container.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 10000);
+            }, 400);
+        }
+
+        // Crear estrellas de fondo
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Efecto de explosión de corazones al hacer clic
+        function createHeartExplosion(x, y) {
+            const hearts = ['💕', '💗', '💖', '❤️', '💓'];
+            
+            for (let i = 0; i < 12; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.position = 'fixed';
+                heart.style.left = x + 'px';
+                heart.style.top = y + 'px';
+                heart.style.fontSize = '25px';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '1000';
+                heart.style.transition = 'all 1s ease-out';
+                
+                document.body.appendChild(heart);
+                
+                const angle = (i / 12) * Math.PI * 2;
+                const distance = 100 + Math.random() * 50;
+                
+                setTimeout(() => {
+                    heart.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`;
+                    heart.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 1000);
+            }
+        }
+
+        // Event listener para el corazón principal
+        document.getElementById('mainHeart').addEventListener('click', function(e) {
+            createHeartExplosion(e.clientX, e.clientY);
+        });
+
+        // Event listener para clicks en cualquier parte
+        document.addEventListener('click', function(e) {
+            if (e.target.id !== 'mainHeart') {
+                // Crear un pequeño corazón donde se hace clic
+                const heart = document.createElement('div');
+                heart.innerHTML = '💕';
+                heart.style.position = 'fixed';
+                heart.style.left = e.clientX + 'px';
+                heart.style.top = e.clientY + 'px';
+                heart.style.fontSize = '30px';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '1000';
+                heart.style.transition = 'all 1s ease-out';
+                heart.style.transform = 'translate(-50%, -50%)';
+                
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.style.transform = 'translate(-50%, -50%) translateY(-100px) scale(1.5)';
+                    heart.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 1000);
+            }
+        });
+
+        // Inicializar efectos
+        createStars();
+        createFloatingHearts();
+
+        // === FUNCIONES PARA LAS NUEVAS INTERACCIONES ===
+
+        // Abrir sobre de carta
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope');
+            const modal = document.getElementById('letterModal');
+            
+            if (!envelope.classList.contains('opened')) {
+                envelope.classList.remove('closing');
+                envelope.classList.add('opened');
+                
+                // Esperar a que se abra el sobre y luego mostrar el modal
+                setTimeout(() => {
+                    modal.classList.add('active');
+                    // Crear explosión de corazones
+                    for (let i = 0; i < 15; i++) {
+                        setTimeout(() => {
+                            createHeartExplosion(
+                                Math.random() * window.innerWidth,
+                                Math.random() * window.innerHeight
+                            );
+                        }, i * 80);
+                    }
+                }, 400);
+            }
+        }
+
+        // Cerrar el modal y el sobre
+        function closeLetterModal(event) {
+            if (event && !event.target.classList.contains('letter-modal') && event.target.tagName !== 'BUTTON') {
+                return;
+            }
+            
+            const envelope = document.getElementById('envelope');
+            const modal = document.getElementById('letterModal');
+            
+            modal.classList.remove('active');
+            
+            // Esperar a que se cierre el modal y luego cerrar el sobre
+            setTimeout(() => {
+                envelope.classList.remove('opened');
+                envelope.classList.add('closing');
+                
+                // Quitar la clase closing después de la animación
+                setTimeout(() => {
+                    envelope.classList.remove('closing');
+                }, 500);
+            }, 300);
+        }
+
+        // Animar tarjetas de razones
+        function animateCard(card) {
+            card.style.transform = 'scale(1.2) rotate(' + (Math.random() * 10 - 5) + 'deg)';
+            setTimeout(() => {
+                card.style.transform = '';
+            }, 300);
+            
+            // Crear corazón en la tarjeta
+            const rect = card.getBoundingClientRect();
+            const heart = document.createElement('div');
+            heart.innerHTML = '💕';
+            heart.style.cssText = `
+                position: fixed;
+                left: ${rect.left + rect.width / 2}px;
+                top: ${rect.top}px;
+                font-size: 25px;
+                pointer-events: none;
+                z-index: 1000;
+                transition: all 0.8s ease-out;
+            `;
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.style.transform = 'translateY(-80px) scale(1.5)';
+                heart.style.opacity = '0';
+            }, 10);
+            
+            setTimeout(() => heart.remove(), 800);
+        }
+
+        // Click en infinito
+        function infinityClick() {
+            const messages = [
+                'Te amoooooo',
+                'Mua mua mua'
+            ];
+            
+            const msg = messages[Math.floor(Math.random() * messages.length)];
+            
+            // Crear mensaje flotante
+            const msgElement = document.createElement('div');
+            msgElement.innerHTML = msg;
+            msgElement.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
+                padding: 20px 40px;
+                border-radius: 50px;
+                color: white;
+                font-family: 'Dancing Script', cursive;
+                font-size: 1.8rem;
+                z-index: 10000;
+                animation: popIn 0.5s ease;
+                box-shadow: 0 10px 40px rgba(255, 77, 109, 0.5);
+            `;
+            document.body.appendChild(msgElement);
+            
+            // Explosión de corazones
+            createHeartExplosion(window.innerWidth / 2, window.innerHeight / 2);
+            
+            setTimeout(() => {
+                msgElement.style.opacity = '0';
+                msgElement.style.transform = 'translate(-50%, -50%) scale(0.5)';
+                msgElement.style.transition = 'all 0.3s ease';
+            }, 1500);
+            
+            setTimeout(() => msgElement.remove(), 1800);
+        }
+
+        // Agregar animación popIn
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes popIn {
+                0% { transform: translate(-50%, -50%) scale(0); }
+                70% { transform: translate(-50%, -50%) scale(1.1); }
+                100% { transform: translate(-50%, -50%) scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // === CONTADOR DE AMOR ===
+        // Fecha de inicio de la relación (ajusta esta fecha)
+        const startDate = new Date('2025-10-05'); // Ajusta al día que empezaron
+        
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - startDate;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+        
+        updateCounter();
+        setInterval(updateCounter, 1000);
+
+        // Mensaje en consola (easter egg para programadores)
+        console.log('%c💕 Fernanda, eres lo mejor que me ha pasado 💕', 
+            'color: #ff6b8a; font-size: 20px; font-weight: bold;');
+        console.log('%c✨ Te quedó bonito el detalle de aparecer en mi vida :3 ✨', 
+            'color: #667eea; font-size: 16px;');
+    </script>
+</body>
+</html>
