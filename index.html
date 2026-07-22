@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teamo JAJA</title>
+    <title>Teamo</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -12,12 +12,48 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-base: #13071f;
+            --bg-deep: #080510;
+            --accent: #c084fc;
+            --accent-strong: #8b5cf6;
+            --accent-soft: #e9d5ff;
+            --accent-glow: rgba(192, 132, 252, 0.5);
+            --accent-glow-strong: rgba(139, 92, 246, 0.58);
+            --panel: rgba(116, 71, 188, 0.16);
+            --panel-border: rgba(192, 132, 252, 0.22);
+        }
+
         body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            min-height: 100dvh;
+            background: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-deep) 100%);
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
             position: relative;
+            isolation: isolate;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            transform: scale(1.02);
+            filter: brightness(0.62) saturate(1.18) contrast(1.14) hue-rotate(250deg);
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at top, rgba(192, 132, 252, 0.12), transparent 34%),
+                radial-gradient(circle at center, rgba(255, 255, 255, 0.02), transparent 40%),
+                radial-gradient(circle at bottom, rgba(0, 0, 0, 0.58), transparent 70%),
+                linear-gradient(180deg, rgba(5, 7, 16, 0.10), rgba(5, 7, 16, 0.56));
+            pointer-events: none;
+            z-index: -1;
         }
 
         /* Contenedor de corazones flotantes */
@@ -35,10 +71,10 @@
         .heart {
             position: absolute;
             font-size: 20px;
-            color: #ff6b8a;
+            color: var(--accent);
             animation: float-up 8s ease-in infinite;
             opacity: 0;
-            text-shadow: 0 0 10px rgba(255, 107, 138, 0.5);
+            text-shadow: 0 0 10px var(--accent-glow);
         }
 
         @keyframes float-up {
@@ -62,12 +98,12 @@
         .main-content {
             position: relative;
             z-index: 10;
-            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
+            padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 24px);
         }
 
         /* Corazón central animado */
@@ -78,9 +114,9 @@
 
         .heart-main {
             font-size: 120px;
-            color: #ff4d6d;
+            color: var(--accent-soft);
             animation: pulse 1.5s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(255, 77, 109, 0.6));
+            filter: drop-shadow(0 0 30px var(--accent-glow-strong));
             cursor: pointer;
             transition: transform 0.3s ease;
         }
@@ -104,7 +140,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border: 2px solid rgba(255, 107, 138, 0.3);
+            border: 2px solid rgba(192, 132, 252, 0.32);
             border-radius: 50%;
             animation: ring-expand 3s ease-out infinite;
         }
@@ -133,16 +169,16 @@
             color: #fff;
             text-align: center;
             margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(255, 107, 138, 0.5);
+            text-shadow: 0 0 20px var(--accent-glow);
             animation: glow 2s ease-in-out infinite alternate;
         }
 
         @keyframes glow {
             from {
-                text-shadow: 0 0 20px rgba(255, 107, 138, 0.5);
+                text-shadow: 0 0 20px var(--accent-glow);
             }
             to {
-                text-shadow: 0 0 40px rgba(255, 107, 138, 0.8), 0 0 60px rgba(255, 107, 138, 0.4);
+                text-shadow: 0 0 40px rgba(192, 132, 252, 0.8), 0 0 60px rgba(139, 92, 246, 0.42);
             }
         }
 
@@ -156,11 +192,11 @@
         }
 
         .months-badge {
-            background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
             padding: 15px 40px;
             border-radius: 50px;
             margin-bottom: 40px;
-            box-shadow: 0 10px 40px rgba(255, 77, 109, 0.4);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.4);
             animation: float 3s ease-in-out infinite;
         }
 
@@ -182,13 +218,13 @@
 
         /* Mensaje romántico */
         .love-message {
-            max-width: 600px;
+            max-width: min(600px, calc(100vw - 32px));
             text-align: center;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--panel);
             border-radius: 20px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 107, 138, 0.2);
+            border: 1px solid var(--panel-border);
             margin-bottom: 40px;
         }
 
@@ -200,7 +236,7 @@
         }
 
         .love-message .highlight {
-            color: #ff6b8a;
+            color: var(--accent-soft);
             font-weight: 600;
         }
 
@@ -213,7 +249,7 @@
 
         .small-heart {
             font-size: 30px;
-            color: #ff6b8a;
+            color: var(--accent);
             animation: bounce 1s ease-in-out infinite;
         }
 
@@ -237,7 +273,7 @@
             margin-top: 50px;
             font-family: 'Dancing Script', cursive;
             font-size: 1.8rem;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(233, 213, 255, 0.72);
         }
 
         /* Partículas de brillo */
@@ -266,26 +302,33 @@
         .decorative-line {
             width: 200px;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #ff6b8a, transparent);
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
             margin: 20px 0;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
+            .main-content {
+                justify-content: flex-start;
+                padding-top: 56px;
+                padding-bottom: 32px;
+            }
+
             .title {
-                font-size: 2.5rem;
+                font-size: clamp(2.2rem, 10vw, 2.8rem);
+                line-height: 1.05;
             }
             
             .subtitle {
-                font-size: 1.2rem;
+                font-size: clamp(1rem, 4.8vw, 1.2rem);
             }
             
             .heart-main {
-                font-size: 80px;
+                font-size: clamp(72px, 18vw, 92px);
             }
             
             .months-badge span {
-                font-size: 1.5rem;
+                font-size: clamp(1.2rem, 5vw, 1.5rem);
             }
             
             .love-message {
@@ -294,7 +337,20 @@
             }
             
             .love-message p {
-                font-size: 1rem;
+                font-size: clamp(0.95rem, 3.8vw, 1rem);
+                line-height: 1.75;
+            }
+
+            .envelope {
+                width: min(240px, 86vw);
+                height: auto;
+                aspect-ratio: 280 / 180;
+            }
+
+            .envelope-front::before {
+                border-left-width: calc(min(240px, 86vw) / 2);
+                border-right-width: calc(min(240px, 86vw) / 2);
+                border-top-width: calc((min(240px, 86vw) / 280) * 90px);
             }
         }
 
@@ -371,16 +427,16 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
             border-radius: 10px;
-            box-shadow: 0 15px 40px rgba(255, 77, 109, 0.4);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.36);
         }
 
         .envelope-front {
             position: absolute;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #ff8fa3, #ff6b8a);
+            background: linear-gradient(135deg, #d8b4fe, var(--accent));
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -397,7 +453,7 @@
             transform: translateX(-50%);
             border-left: 140px solid transparent;
             border-right: 140px solid transparent;
-            border-top: 90px solid #ff4d6d;
+            border-top: 90px solid var(--accent-strong);
             border-radius: 10px 10px 0 0;
         }
 
@@ -405,7 +461,7 @@
             font-size: 50px;
             z-index: 3;
             animation: pulse 1.5s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+            filter: drop-shadow(0 0 10px rgba(233, 213, 255, 0.55));
         }
 
         .envelope-text {
@@ -466,7 +522,7 @@
         }
 
         .letter-modal-content {
-            background: white;
+            background: #f3ecff;
             padding: 40px 50px;
             border-radius: 20px;
             text-align: center;
@@ -474,7 +530,7 @@
             margin: 20px;
             transform: scale(0.5) translateY(50px);
             transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            box-shadow: 0 20px 60px rgba(255, 107, 138, 0.4);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.34);
             position: relative;
         }
 
@@ -484,7 +540,7 @@
 
         .letter-modal-text {
             font-family: 'Quicksand', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            color: #ff4d6d;
+            color: #6d28d9;
             font-size: 1.8rem;
             line-height: 1.6;
             margin-bottom: 20px;
@@ -497,7 +553,7 @@
         }
 
         .letter-modal-close {
-            background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
             border: none;
             padding: 12px 35px;
             border-radius: 50px;
@@ -506,12 +562,12 @@
             font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4);
+            box-shadow: 0 5px 20px rgba(139, 92, 246, 0.38);
         }
 
         .letter-modal-close:hover {
             transform: scale(1.1);
-            box-shadow: 0 8px 30px rgba(255, 77, 109, 0.5);
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.48);
         }
 
         /* Decoración del modal */
@@ -522,7 +578,7 @@
             left: 50%;
             transform: translateX(-50%);
             font-size: 50px;
-            filter: drop-shadow(0 5px 15px rgba(255, 107, 138, 0.5));
+            filter: drop-shadow(0 5px 15px rgba(192, 132, 252, 0.48));
         }
 
         @media (max-width: 768px) {
@@ -545,7 +601,7 @@
         .reasons-title {
             font-family: 'Dancing Script', cursive;
             font-size: 2rem;
-            color: #ff6b8a;
+            color: var(--accent-soft);
             margin-bottom: 25px;
         }
 
@@ -558,10 +614,10 @@
         }
 
         .reason-card {
-            background: rgba(255,255,255,0.05);
+            background: var(--panel);
             padding: 15px 25px;
             border-radius: 20px;
-            border: 1px solid rgba(255, 107, 138, 0.2);
+            border: 1px solid var(--panel-border);
             color: white;
             font-size: 0.95rem;
             cursor: pointer;
@@ -570,9 +626,9 @@
         }
 
         .reason-card:hover {
-            background: rgba(255, 107, 138, 0.2);
+            background: rgba(139, 92, 246, 0.18);
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 30px rgba(255, 107, 138, 0.3);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.28);
         }
 
         .reason-card .emoji {
@@ -581,18 +637,18 @@
 
         /* === CONTADOR DE AMOR === */
         .love-counter {
-            background: rgba(255,255,255,0.05);
+            background: var(--panel);
             padding: 25px 40px;
             border-radius: 20px;
             margin: 30px 0;
-            border: 1px solid rgba(255, 107, 138, 0.2);
+            border: 1px solid var(--panel-border);
             text-align: center;
         }
 
         .counter-title {
             font-family: 'Dancing Script', cursive;
             font-size: 1.5rem;
-            color: #ff6b8a;
+            color: var(--accent-soft);
             margin-bottom: 15px;
         }
 
@@ -633,7 +689,7 @@
         .infinity-symbol {
             font-size: 80px;
             line-height: 1;
-            background: linear-gradient(135deg, #ff6b8a, #ff4d6d, #667eea, #764ba2);
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong), #7c3aed, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -668,7 +724,7 @@
             .envelope-front::before {
                 border-left: 120px solid transparent;
                 border-right: 120px solid transparent;
-                border-top: 80px solid #ff4d6d;
+                border-top: 80px solid var(--accent-strong);
             }
             
             .reasons-title {
@@ -683,14 +739,271 @@
                 font-size: 60px;
             }
         }
+
+        /* === COLLAGE DE FERNANDA === */
+        .fernanda-collage {
+            margin: 40px 0 30px;
+            text-align: center;
+            width: 100%;
+            max-width: 560px;
+        }
+
+        .collage-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.4rem;
+            color: var(--accent-soft);
+            margin-bottom: 22px;
+            text-shadow: 0 0 20px var(--accent-glow);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .collage-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 18px;
+            background: var(--panel);
+            border-radius: 26px;
+            border: 1px solid var(--panel-border);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.28),
+                        0 0 0 1px rgba(192, 132, 252, 0.1);
+        }
+
+        /* Layout 2 columnas: 3 filas de 2 + última imagen centrada ancha */
+        .collage-img {
+            border-radius: 14px;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: contain;
+            background: rgba(19, 7, 31, 0.45);
+            border: 2px solid rgba(192, 132, 252, 0.4);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.32);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            filter: brightness(1.04) saturate(1.1);
+            display: block;
+        }
+
+        .collage-img:nth-child(1) { transform: rotate(-0.8deg); }
+        .collage-img:nth-child(2) { transform: rotate(1.2deg);  }
+        .collage-img:nth-child(3) { transform: rotate(1deg);    }
+        .collage-img:nth-child(4) { transform: rotate(-1.4deg); }
+        .collage-img:nth-child(5) { transform: rotate(0.8deg);  }
+        .collage-img:nth-child(6) { transform: rotate(-1deg);   }
+        .collage-img:nth-child(7) {
+            grid-column: 1 / 3;
+            aspect-ratio: 16 / 7;
+            transform: rotate(0.4deg);
+        }
+        .collage-img:nth-child(8)  { transform: rotate(1.1deg);  }
+        .collage-img:nth-child(9)  { transform: rotate(-0.9deg); }
+        .collage-img:nth-child(10) { transform: rotate(0.6deg);  }
+        .collage-img:nth-child(11) { transform: rotate(-1.2deg); }
+
+        .collage-img:hover {
+            transform: scale(1.06) rotate(0deg) !important;
+            box-shadow: 0 18px 44px rgba(192, 132, 252, 0.6);
+            z-index: 5;
+            position: relative;
+        }
+
+        .collage-caption {
+            color: rgba(233, 213, 255, 0.8);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.25rem;
+            margin-top: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        /* === PONIES FIJOS LATERALES === */
+        .pony-fixed {
+            position: fixed;
+            pointer-events: none;
+            z-index: 6;
+            opacity: 0.85;
+            filter: drop-shadow(0 0 14px rgba(192, 132, 252, 0.55));
+        }
+
+        .pony-fixed.bottom-left {
+            bottom: 70px;
+            left: 28px;
+            width: 112px;
+            animation: pony-bob-left 5s ease-in-out infinite;
+        }
+
+        .pony-fixed.bottom-right {
+            bottom: 70px;
+            right: 28px;
+            width: 112px;
+            animation: pony-bob-right 5s ease-in-out infinite 1.2s;
+        }
+
+        .pony-fixed.top-left {
+            top: 180px;
+            left: 22px;
+            width: 88px;
+            animation: pony-bob-left 6s ease-in-out infinite 0.6s;
+        }
+
+        .pony-fixed.top-right {
+            top: 200px;
+            right: 22px;
+            width: 88px;
+            animation: pony-bob-right 6s ease-in-out infinite 1.8s;
+        }
+
+        @keyframes pony-bob-left {
+            0%, 100% { transform: scaleX(-1) translateY(0); }
+            50% { transform: scaleX(-1) translateY(-14px); }
+        }
+
+        @keyframes pony-bob-right {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-14px); }
+        }
+
+        /* === PONY ROW DECORATION === */
+        .pony-row-decor {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            align-items: flex-end;
+            margin: 8px 0;
+            flex-wrap: wrap;
+        }
+
+        .pony-row-decor img {
+            width: 74px;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.5));
+            animation: float 3.5s ease-in-out infinite;
+            opacity: 0.92;
+        }
+
+        .pony-row-decor img:nth-child(2) { animation-delay: 0.7s; width: 66px; }
+        .pony-row-decor img:nth-child(3) { animation-delay: 1.4s; width: 70px; }
+
+        /* Pony dentro del modal de la carta */
+        .letter-pony {
+            width: 78px;
+            position: absolute;
+            bottom: -16px;
+            right: 12px;
+            filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.5));
+            animation: float 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        /* Pony row final cerca de firma */
+        .pony-end-row {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            align-items: flex-end;
+            margin: 20px 0 10px;
+        }
+
+        .pony-end-row img {
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.48));
+            opacity: 0.88;
+        }
+
+        .pony-end-row img:nth-child(1) { width: 72px; animation: float 4s ease-in-out infinite 0s; }
+        .pony-end-row img:nth-child(2) { width: 80px; animation: float 3.5s ease-in-out infinite 0.5s; }
+
+        /* === BOTÓN DE MÚSICA === */
+        .music-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            border: none;
+            cursor: pointer;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 6px 24px rgba(139, 92, 246, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.15);
+            box-shadow: 0 10px 32px rgba(139, 92, 246, 0.65);
+        }
+
+        .music-btn.playing .music-icon {
+            display: inline-block;
+            animation: spin-note 3s linear infinite;
+        }
+
+        @keyframes spin-note {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        .music-tooltip {
+            position: fixed;
+            bottom: 82px;
+            right: 24px;
+            background: rgba(30, 10, 50, 0.92);
+            color: var(--accent-soft);
+            font-size: 0.78rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--panel-border);
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            z-index: 9999;
+        }
+
+        .music-btn:hover + .music-tooltip,
+        .music-tooltip.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .collage-grid { gap: 6px; padding: 10px; }
+            .collage-img { min-height: unset; }
+            .fernanda-collage { max-width: calc(100vw - 32px); }
+            .pony-row-decor img { width: 54px; }
+            .pony-end-row img { width: 52px !important; }
+            .collage-title { font-size: 1.9rem; }
+        }
     </style>
 </head>
 <body>
     <!-- Estrellas de fondo -->
     <div class="stars" id="stars"></div>
     
+    <!-- Audio de fondo -->
+    <audio id="bgMusic" loop autoplay muted>
+        <source src="Ado  真夜中のドア Stay with Me (Remaster).mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Botón flotante de música -->
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Música">
+        <span class="music-icon">🎵</span>
+    </button>
+    <div class="music-tooltip" id="musicTooltip">Stay with Me ✨</div>
+
     <!-- Corazones flotantes -->
     <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Ponies fijos laterales -->
+    <img src="img/Twilight_Sparkle.webp" alt="" class="pony-fixed bottom-left">
+    <img src="img/rarity.png"            alt="" class="pony-fixed bottom-right">
+    <img src="img/starlight.png"         alt="" class="pony-fixed top-left">
+    <img src="img/applejack.png"         alt="" class="pony-fixed top-right">
 
     <!-- Contenido principal -->
     <div class="main-content">
@@ -703,30 +1016,32 @@
         </div>
 
         <!-- Título principal -->
-        <h1 class="title fade-in">Te Amoo Fernanda :3</h1>
+        <h1 class="title fade-in">Te amoo Fer :3</h1>
         
         <div class="decorative-line fade-in"></div>
         
         <!-- Subtítulo -->
-        <p class="subtitle fade-in">Mi amor, mi vida, mi todo</p>
+        <p class="subtitle fade-in">Te amodoro muchisimo amorcita</p>
 
         <!-- Badge de meses -->
         <div class="months-badge fade-in">
-            <span>✨ 4 Meses Juntos ✨</span>
+            <span>✨ 7 Meses Juntos ✨</span>
         </div>
 
         <!-- Mensaje de amor -->
         <div class="love-message fade-in">
             <p>
-                Amoooooooor, cada día a tu lado es un regalo que atesoro con todo mi corazón bebé. 
-                <span class="highlight"> Te amo muchisimo mi niña preciosa hermosa, mi dianita bebe uwu</span>, eres la razón de mis dias, de mis sonrisas, eres mi razón de ser,
-                eres la luz que ilumina mis días, eres el amor que llena mi vida de felicidadd.
+                Hoy cumplimos <span class="highlight">7 meses juntos</span> y la verdad no sé ni por dónde empezar porque siento que podría escribirte muchísimo y aun así no terminaría de explicarte todo lo que siento por ti. Ya son 7 meses desde que empezamos esta relación y aunque a veces todavía me cuesta creer que llevemos tanto tiempo, cuando me pongo a pensar en todo lo que hemos vivido siento que han pasado muchísimas cosas entre nosotros: hemos tenido momentos muy bonitos, momentos donde nos la pasamos riendo por cualquier tontería, conversaciones que probablemente nadie más entendería, nuestros momentos de estar hablando de cualquier cosa durante horas, y también momentos que no han sido tan fáciles, pero que al final hemos sabido superar juntos. Creo que eso es algo que valoro muchísimo de nosotros: que a pesar de la distancia y de todas las cosas que puedan pasar, seguimos aquí, seguimos eligiéndonos y seguimos queriendo formar parte de la vida del otro.
                 <br><br>
-                Estos <span class="highlight">4 meses</span> a tu lado han sido los más hermosos de mi vida mi amorr, te amo princesa, y cada momento contigo es un sueño hecho realidad. 
-                Te juro que nunca quisiera despegarme de ti, eres lo mejor que me ha pasado en vdd jsjsj :3
-                Sé que juntos escribiremos muchas páginas más de nuestra historia de amor.
+                Obviamente muchas veces quisiera tenerte aquí conmigo, poder verte en persona, abrazarte cuando te extraño, salir contigo, caminar juntos, hacer todas esas cosas tan simples que para otras parejas son algo normal pero que para nosotros significan muchísimo porque estamos separados por tanto 😭 Y aunque muchas veces la distancia se siente horrible, también creo que me ha hecho darme cuenta de lo mucho que significas para mí, porque aunque estés lejos, de alguna manera siempre estás presente en mi vida. Eres la primera persona a la que muchas veces quiero contarle algo cuando me pasa, eres con quien quiero hablar cuando estoy aburrido, cuando estoy feliz, cuando me pasa algo bueno o incluso cuando simplemente quiero estar molestando a alguien JSJS, y ya eres parte de mi día a día de una manera que no sé cómo explicarte. A veces puede parecer que solamente estamos hablando de cosas sin sentido, pero para mí eres muchísimo más que eso: <span class="highlight">eres mi niña, mi amorcito, mi esposa, mi amiga, mi persona favorita, mi todo</span>, y alguien que de verdad quiero tener en mi vida por muchísimo tiempo.
                 <br><br>
-                Te amooo hoy, mañana y siempre mvd te amooo. 💕
+                No sabes cuánto deseo que algún día podamos dejar de tener que decir te extraño por mensaje y simplemente podamos estar juntos, que pueda verte frente a mí y no a través de una pantalla, que pueda abrazarte y quedarme contigo, salir a algún lugar, hacer cualquier cosa juntos aunque sea algo súper simple. Creo que después de todo este tiempo ese va a ser uno de los momentos más bonitos de mi vida: poder finalmente verte y pensar, por fin, después de tanto tiempo estás aquí conmigo. Yo sí quiero vivir muchas cosas contigo, quiero seguir conociéndote, seguir aprendiendo de ti, seguir compartiendo nuestras cosas, seguir teniendo nuestras conversaciones, seguir riéndome contigo por las cosas más tontas del mundo, y también quiero estar para ti cuando las cosas no estén bien, cuando tengas un día malo o cuando simplemente necesites a alguien que te escuche. No quiero estar solamente en los momentos bonitos, quiero ser esa persona con la que puedas contar cuando necesites a alguien. Sé que no todo siempre va a ser perfecto, probablemente vamos a seguir teniendo nuestros momentos, vamos a seguir discutiendo por algunas cosas, vamos a seguir teniendo días buenos y días malos, pero quiero que sepas que yo quiero seguir intentando contigo, quiero seguir cuidando nuestra relación y quiero seguir construyendo todo esto que tenemos porque para mí tú vales muchísimo la pena.
+                <br><br>
+                A veces me pongo a pensar en cómo empezó todo y en cómo llegamos hasta aquí, y me da mucha felicidad saber que entre tantas personas en el mundo terminé encontrándote a ti. Puede que estemos en países diferentes y que haya miles de kilómetros entre nosotros, pero de alguna forma nos encontramos y terminamos convirtiéndonos en algo tan importante el uno para el otro, y eso es algo que nunca voy a dejar de agradecer. Gracias por estos 7 meses mi amorcito, gracias por cada momento bonito, por cada conversación, por cada risa, por cada vez que me has hecho sentir querido y por todas esas pequeñas cosas que quizás tú piensas que no son importantes pero que para mí significan muchísimo. Gracias por dejarme entrar en tu vida y por permitirme compartir la mía contigo, gracias por ser tú y por darme la oportunidad de conocer cada vez más a esa niña hermosa de la que me enamoré. Quiero que sepas que aunque a veces no encuentre las palabras exactas para decirte todo lo que siento, <span class="highlight">te amo muchísimo</span>. Muchísimo más de lo que probablemente te digo y más de lo que cualquier página o cualquier mensaje podría demostrarte. Te amo por ser tú, por la forma en la que eres conmigo, por todas nuestras tonterías, por nuestras conversaciones, por cada momento que hemos compartido y simplemente por ser esa persona que logró convertirse en alguien tan importante para mí.
+                <br><br>
+                Espero con todo mi corazoncito que estos 7 meses sean solamente el comienzo de muchísimos más, que algún día podamos mirar atrás y decir "te acuerdas cuando teníamos que estar separados" y reírnos de todo lo que tuvimos que pasar para finalmente poder estar juntos. Espero que podamos cumplir muchos meses más, muchos años más, y que algún día ya no tengamos que celebrar nuestros meses a través de la distancia sino estando uno al lado del otro.
+                <br><br>
+                Así que feliz 7 meses mi amorcito hermoso 🩷 <span class="highlight">Te amo con todo mi corazón</span> y espero poder seguir diciéndotelo durante muchísimo tiempo más 🥺🩷
             </p>
         </div>
 
@@ -737,6 +1052,32 @@
             <span class="small-heart">💖</span>
             <span class="small-heart">💕</span>
             <span class="small-heart">💗</span>
+        </div>
+
+        <!-- PONIES DECORATIVOS (fila antes del collage) -->
+        <div class="pony-row-decor fade-in">
+            <img src="img/pinkipie.png" alt="Pinkie Pie">
+            <img src="img/fluttershy.png" alt="Fluttershy">
+            <img src="img/starligth2.png" alt="Starlight">
+        </div>
+
+        <!-- COLLAGE DE FERNANDA -->
+        <div class="fernanda-collage fade-in">
+            <h3 class="collage-title">💜 Mi Fernanda 💜</h3>
+            <div class="collage-grid">
+                <img src="img/image.png"  alt="Fernanda" class="collage-img">
+                <img src="img/image2.png" alt="Fernanda" class="collage-img">
+                <img src="img/image3.png" alt="Fernanda" class="collage-img">
+                <img src="img/image4.png" alt="Fernanda" class="collage-img">
+                <img src="img/1.png"  alt="Fernanda" class="collage-img">
+                <img src="img/2.jpeg" alt="Fernanda" class="collage-img">
+                <img src="img/3.jpeg" alt="Fernanda" class="collage-img" id="foto-rotar">
+                <img src="img/4.jpeg" alt="Fernanda" class="collage-img" id="foto-volteada">
+                <img src="img/5.jpeg" alt="Fernanda" class="collage-img">
+                <img src="img/6.jpeg" alt="Fernanda" class="collage-img">
+                <img src="img/7.jpeg" alt="Fernanda" class="collage-img">
+            </div>
+            <p class="collage-caption">Te amodoroo ✨💕</p>
         </div>
 
         <!-- SOBRE DE CARTA INTERACTIVO -->
@@ -755,10 +1096,10 @@
             <div class="letter-modal-content" onclick="event.stopPropagation()">
                 <div class="letter-modal-emoji">💕✨💖</div>
                 <p class="letter-modal-text">
-                    Te quedó bien bonito el detalle de aparecer en mi vida :3
-                    JSJJSJS dame besito
+                    Eres el rojo con bolsa cafe de mi Perisur 😍🩷
                 </p>
                 <button class="letter-modal-close" onclick="closeLetterModal()">💕 Cerrar 💕</button>
+                <img src="img/pngegg.png" alt="Ponies" class="letter-pony">
             </div>
         </div>
 
@@ -804,6 +1145,12 @@
         <div class="infinity-container fade-in">
             <div class="infinity-symbol" onclick="infinityClick()">∞</div>
             <p class="infinity-text">Cuando nos casamos? 7w7</p>
+        </div>
+
+        <!-- Pony row final -->
+        <div class="pony-end-row fade-in">
+            <img src="img/pinkipie.png"         alt="Pinkie Pie">
+            <img src="img/fluttershy.png"       alt="Fluttershy">
         </div>
 
         <!-- Firma -->
@@ -1012,7 +1359,7 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
+                background: linear-gradient(135deg, var(--accent), var(--accent-strong));
                 padding: 20px 40px;
                 border-radius: 50px;
                 color: white;
@@ -1020,7 +1367,7 @@
                 font-size: 1.8rem;
                 z-index: 10000;
                 animation: popIn 0.5s ease;
-                box-shadow: 0 10px 40px rgba(255, 77, 109, 0.5);
+                box-shadow: 0 10px 40px rgba(139, 92, 246, 0.5);
             `;
             document.body.appendChild(msgElement);
             
@@ -1049,7 +1396,7 @@
 
         // === CONTADOR DE AMOR ===
         // Fecha de inicio de la relación (ajusta esta fecha)
-        const startDate = new Date('2025-10-05'); // Ajusta al día que empezaron
+        const startDate = new Date('2025-12-22'); // 22 de diciembre 2025
         
         function updateCounter() {
             const now = new Date();
@@ -1069,11 +1416,62 @@
         updateCounter();
         setInterval(updateCounter, 1000);
 
+        // === MÚSICA DE FONDO ===
+        const bgMusic  = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicTooltip = document.getElementById('musicTooltip');
+        let musicStarted = false;
+
+        function toggleMusic() {
+            musicStarted = true;
+            bgMusic.muted = false;
+            if (bgMusic.paused) {
+                bgMusic.volume = 0.45;
+                bgMusic.play();
+                musicBtn.classList.add('playing');
+                musicTooltip.classList.add('show');
+                setTimeout(() => musicTooltip.classList.remove('show'), 2000);
+            } else {
+                bgMusic.pause();
+                musicBtn.classList.remove('playing');
+            }
+        }
+
+        // Los navegadores SIEMPRE bloquean el audio con sonido si no ha habido
+        // una interacción "real" del usuario — clic, tecla o toque. Mover el mouse
+        // o hacer scroll NO cuentan como interacción válida para esto, así que no
+        // los usamos (si los usamos, consumían el intento y bloqueaban el clic real).
+        // Truco: arrancamos el audio silenciado automáticamente (esto sí lo permiten
+        // los navegadores) y le quitamos el silencio en la primera interacción real.
+        function unmuteMusic() {
+            if (musicStarted) return;
+            bgMusic.muted = false;
+            bgMusic.volume = 0.45;
+            bgMusic.play().then(() => {
+                musicStarted = true;
+                musicBtn.classList.add('playing');
+                musicTooltip.classList.add('show');
+                setTimeout(() => musicTooltip.classList.remove('show'), 2500);
+                ['click', 'keydown', 'touchstart'].forEach(evt =>
+                    document.removeEventListener(evt, unmuteMusic)
+                );
+            }).catch(() => {});
+        }
+
+        ['click', 'keydown', 'touchstart'].forEach(evt =>
+            document.addEventListener(evt, unmuteMusic)
+        );
+
+        // Aseguramos que el audio arranque (silenciado) apenas carga la página
+        window.addEventListener('load', () => {
+            bgMusic.play().catch(() => {});
+        });
+
         // Mensaje en consola (easter egg para programadores)
         console.log('%c💕 Fernanda, eres lo mejor que me ha pasado 💕', 
-            'color: #ff6b8a; font-size: 20px; font-weight: bold;');
+            'color: #c084fc; font-size: 20px; font-weight: bold;');
         console.log('%c✨ Te quedó bonito el detalle de aparecer en mi vida :3 ✨', 
-            'color: #667eea; font-size: 16px;');
+            'color: #a78bfa; font-size: 16px;');
     </script>
 </body>
 </html>
